@@ -37,3 +37,23 @@
 - Les tâches en cours et terminées sont suivies dans `docs/12-PROGRESS-TRACKER.md`.
 - Une seule personne/agent propriétaire par tâche active.
 - Toute tâche bloquée doit inclure un blocage explicite et un besoin d'entrée.
+
+### 2026-02-19 - Décision: CI initiale orientée conformité structure
+- Contexte: Le dépôt est en phase de bootstrap et contient surtout une structure cible et de la documentation.
+- Options considérées:
+  - Mettre en place directement des linters spécifiques (Go/Rust/JS) non encore pertinents.
+  - Démarrer par une validation universelle de structure/documents obligatoires.
+- Décision retenue: Ajouter un workflow CI minimal qui exécute un script bash de vérification de structure.
+- Impacts:
+  - Feedback rapide sur les régressions de structure.
+  - Base CI simple extensible vers lint/tests applicatifs lors de l'ajout de code.
+
+### 2026-02-19 - Décision: Vertical slice exécutable avant intégration complète agent/engine
+- Contexte: Après la CI de structure, il fallait un incrément réellement exécutable pour valider le flux API de base.
+- Options considérées:
+  - Implémenter immédiatement tout le flux Diagnose/ExecutePlan/IPC.
+  - Commencer par une slice minimale testable avec `/v1/health` et `/v1/agent`.
+- Décision retenue: Ajouter un API gateway Go minimal avec tests automatiques dans CI.
+- Impacts:
+  - Réduction du risque d'architecture “papier”.
+  - Point d'entrée concret pour brancher ensuite Diagnose, ExecutePlan et le fail-closed IPC.
